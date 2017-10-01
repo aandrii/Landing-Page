@@ -1,0 +1,19 @@
+header.header
+    .headerTop
+        .container
+            .contacts
+                a.contact(href="tel:+3806322")
+                    i.fa.fa-mobile.contactIcon(aria-hidden="true")
+                    span.contactText 6337 3128
+
+                a.contact(href="mailto:info@gmail.com")
+                    i.fa.fa-envelope.contactIcon.contactIconEmail(aria-hidden="true")
+                    span.contactText info@gmail.com
+
+                a.facebookIcon(href="facebook.com")
+                    i.fa.fa-facebook(aria-hidden="true")
+    .container
+        .headerBottom
+            .logo: img.logoPicture(src="images/logo.png" alt="picture")
+            include nav
+            a.button.headerButton.buttonRed(href="#") Free Consulptation

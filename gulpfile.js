@@ -4,6 +4,10 @@ const pug = require('gulp-pug');
 const sass = require('gulp-sass');
 const spritesmith = require('gulp.spritesmith');
 const rimraf = require('rimraf');
+const soursemaps = require('gulp-sourcemaps');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
 
 gulp.task('server', function() {
     browserSync.init({
@@ -31,6 +35,16 @@ gulp.task('styles:compile', function () {
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('build/css'))
 })
+
+/*--------js---------*/
+gulp.task('js', function() {
+    return gulp.src(['sours/js/form.js', 'sours/js/main.js'])
+        .pipe(soursemaps.init())
+        .pipe(concat('main.min.js'))
+        .pipe(uglify())
+        .pipe(soursemaps.write())
+        .pipe(gulp.dest('build/js'))
+});
 
 /*--------Sprite---------*/
 gulp.task('sprite', function () {
@@ -70,10 +84,11 @@ gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
 gulp.task('watch', function() {
     gulp.watch('sours/template/**/*.pug', gulp.series('template:compile'))
     gulp.watch('sours/styles/**/*.scss', gulp.series('styles:compile'))
+    gulp.watch('sours/js/**/*.js', gulp.series('js'))
 })
 
 gulp.task('default', gulp.series(
     'clean',
-    gulp.parallel('template:compile', 'styles:compile','sprite' ,'copy'),
+    gulp.parallel('template:compile', 'styles:compile', 'js', 'sprite' ,'copy'),
     gulp.parallel('watch', 'server')
 ))

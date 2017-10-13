@@ -38,7 +38,11 @@ gulp.task('styles:compile', function () {
 
 /*--------js---------*/
 gulp.task('js', function() {
-    return gulp.src(['sours/js/form.js', 'sours/js/main.js'])
+    return gulp.src([
+        'sours/js/form.js',
+        'sours/js/validation.js',
+        'sours/js/main.js'
+        ])
         .pipe(soursemaps.init())
         .pipe(concat('main.min.js'))
         .pipe(uglify())
